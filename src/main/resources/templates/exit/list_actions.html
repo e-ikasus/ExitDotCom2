@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<div th:fragment="actionsList">
+
+		<!-- /* Can the exit be displayed */ -->
+		<a th:if="${exit.state.code != 'CR'}" th:href="@{/exit/show}" class="text-decoration-none">
+			<button class="btn btn-sm btn-info" th:text="#{ACTION_DISPLAY}"/>
+		</a>
+
+		<!-- /* Can the exit be modified by its organiser */ -->
+		<a th:if="${(exit.state.code == 'CR') && (exit.organiser == current)}" th:href="@{/exit/edit}" class="text-decoration-none">
+			<button class="btn btn-sm btn-warning" th:text="#{ACTION_EDIT}"/>
+		</a>
+
+		<!-- /* Can the exit be registered by the current user */ -->
+		<a th:if="${(exit.state.code == 'OP') && (exit.organiser != current) && (!current.registeredExits.contains(exit))}" th:href="@{/exit/register}" class="text-decoration-none">
+			<button class="btn btn-sm btn-info" th:text="#{ACTION_SUBSCRIBE}"/>
+		</a>
+
+		<!-- /* Can the current user unregister to the exit */ -->
+		<a th:if="${(current.registeredExits.contains(exit)) && ((exit.state.code == 'OP') || (exit.state.code == 'CL'))}" th:href="@{/exit/unregister}" class="text-decoration-none">
+			<button class="btn btn-sm btn-warning" th:text="#{ACTION_UNSUBSCRIBE}"/>
+		</a>
+
+		<!-- /* Can the current user cancel the exit */ -->
+		<a th:if="${( (current.isAdmin()) || (exit.organiser == current)) && ((exit.state.code == 'OP') || (exit.state.code == 'CL'))}" th:href="@{/exit/cancel}" class="text-decoration-none">
+			<button class="btn btn-sm btn-danger" th:text="#{ACTION_CANCEL}"/>
+		</a>
+
+	</div>
+
+</body>
+</html>

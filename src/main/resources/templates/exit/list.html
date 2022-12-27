@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+			xmlns:th="http://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+			layout:decorate="~{layout}">
+<body>
+	<div class="container" layout:fragment="content">
+
+		<div th:replace="/exit/search_form::searchForm"></div>
+
+		<h1 class="mt-5" th:text="#{EXIT_LIST_TITLE}">List of exits</h1>
+
+		<table class="table mt-5 mb-5">
+			<thead>
+			<tr>
+				<th th:replace="/exit/th_list::order('EXIT_NAME', 'name')"></th>
+				<th th:replace="/exit/th_list::order('EXIT_DATE', 'startDate')"></th>
+				<th th:replace="/exit/th_list::order('EXIT_CLOSE', 'maxRegisterDate')"></th>
+				<th th:replace="/exit/th_list::order('EXIT_MAX_STUDENTS', 'maxUsers')"></th>
+				<th th:replace="/exit/th_list::order('EXIT_STATE', 'state')"></th>
+				<th th:text="#{EXIT_REGISTERED}"></th>
+				<th th:replace="/exit/th_list::order('EXIT_ORGANISER', 'organiser')"></th>
+				<th th:text="#{EXIT_ACTIONS}"></th>
+			</tr>
+			</thead>
+			<tbody>
+
+			<tr th:each="exit, status: ${exitsList}">
+				<td th:text="${exit.name}"></td>
+				<td th:text="${exit.startDate}"></td>
+				<td th:text="${exit.maxRegisterDate}"></td>
+				<td th:text="${exit.maxUsers}"></td>
+				<td th:text="#{${'EXIT_STATE_' + exit.state.name}}"></td>
+				<td><span th:if="${current.registeredExits.contains(exit)}">X</span></td>
+				<td th:text="${exit.organiser.username}"></td>
+				<td th:insert="/exit/list_actions::actionsList"></td>
+			</tr>
+
+			<tr th:if="${exitsList.isEmpty()}">
+				<td colspan="8" th:text="#{EXIT_EMPTY_LIST}"></td>
+			</tr>
+			</tbody>
+		</table>
+
+		<div th:insert="/inc/page_numbers::pageSelect('exit')"></div>
+
+	</div>
+</body>
+</html>

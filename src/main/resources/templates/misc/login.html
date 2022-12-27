@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+			xmlns:th="http://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+			layout:decorate="~{layout}">
+<head>
+	<title>ExitDotCom</title>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" href="../../static/css/theme.css" th:href="@{/css/theme.css}"/>
+	<link rel="stylesheet" href="../../static/css/global.css" th:href="@{/css/global.css}"/>
+</head>
+<body>
+	<div class="container" layout:fragment="content">
+
+		<div class="card col-4 mx-auto">
+			<div class="card-header">
+				<span>User authentication</span>
+			</div>
+
+			<div class="card-body">
+				<form th:action="@{login}" method="post">
+					<div th:if="${param.error}" class="mb-3 alert alert-danger"><p class="mb-0">Username or password invalid!</p></div>
+
+					<div sec:authorize="isAuthenticated()" class="mb-3 alert alert-primary alert-link">
+						<p class="mb-0">You are already connected as <span sec:authentication="name"></span>. Please
+							<a th:href="@{/login?lougout=1}" href="#">Log out</a> first.</p>
+					</div>
+
+					<label for="username">Username :</label>
+					<input type="text" th:value="${username}" name="username" id="username"
+								 class="form-control input_pseudo_login mb-2" autocomplete="username" required autofocus
+								 placeholder="username or email" oninvalid="this.setCustomValidity('Enter a valid username')"
+								 oninput="this.setCustomValidity('')"/>
+
+					<label for="password">Password :</label>
+					<input type="password" name="password" id="password" class="form-control"
+								 autocomplete="current-password" required oninvalid="this.setCustomValidity('Enter a valid password')"
+								 oninput="this.setCustomValidity('')">
+
+					<div class="d-flex justify-content-between mt-3">
+						<button class="btn btn-lg btn-primary" type="submit"> Log in</button>
+
+						<div class="d-flex flex-column align-items-end">
+							<div class="d-flex align-items-center gap-2 align-items-end">
+								<input id="rememberMe" type="checkbox" class="mb-3 me-3" name="rememberMe">
+								<label for="rememberMe" class="" id="test">Remember me</label>
+							</div>
+							<a th:href="@{/reset_password}" href="#" title="reset password">Forget password</a>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+</body>
+</html>

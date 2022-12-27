@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<div class="card" th:fragment="searchForm">
+		<div class="card-header"><span th:text="#{EXIT_SEARCH_FORM_TITLE}"/></div>
+
+		<form th:name="searchForm" th:id="searchForm" th:object="${searchCriteria}" th:method="GET">
+			<input type="hidden" name="valid" value="1"/>
+			<div class="card-body row align-items-center p-3">
+
+				<!--/* Left column. */-->
+				<div class="col">
+					<div id="schoolDiv" class="row justify-content-between">
+						<label id="schoolLabel" for="school" class="col" th:text="#{EXIT_SEARCH_FORM_SCHOOL_PARAM}"/>
+						<select name="school" id="school" class="col" th:field="*{school}">
+							<option th:value="0" th:text="#{EXIT_SEARCH_FORM_ALL_SCHOOLS}"></option>
+							<option th:each="school: ${schools}" th:value="${school.identifier}" th:text="${school.name}"></option>
+						</select>
+					</div>
+
+					<div id="contentDiv" class="row justify-content-between mt-2">
+						<label id="contentLabel" for="content" class="col" th:text="#{EXIT_SEARCH_FORM_CONTENT_PARAM}"/>
+						<input name="content" id="content" type="text" class="col" th:field="*{content}"/>
+					</div>
+
+					<div id="startDiv" class="row justify-content-between mt-2">
+						<label id="startLabel" for="start" class="col" th:text="#{EXIT_SEARCH_FORM_START_PARAM}"/>
+						<input name="start" id="start" type="date" class="col" th:field="*{start}"/>
+					</div>
+
+					<div id="endDiv" class="row justify-content-between mt-2">
+						<label id="endLabel" for="end" class="col" th:text="#{EXIT_SEARCH_FORM_END_PARAM}"/>
+						<input name="end" id="end" type="date" class="col" th:field="*{end}"/>
+					</div>
+				</div>
+
+				<!--/* Center column. */-->
+				<div class="col ps-5">
+					<div id="organiserDiv" class="text-nowrap">
+						<input name="organiser" id="organiser" type="checkbox" class="m-2 px-2 pb-1" th:field="*{organiser}"/>
+						<label id="organiserLabel" for="organiser" th:text="#{EXIT_SEARCH_FORM_ORGANISER}"/>
+					</div>
+
+					<div id="subscribeDiv" class="text-nowrap mt-2">
+						<input name="subscribe" id="subscribe" type="checkbox" class="m-2 px-2 pb-1" th:field="*{subscribe}"/>
+						<label id="subscribeLabel" for="subscribe" th:text="#{EXIT_SEARCH_FORM_SUBSCRIBE}"/>
+					</div>
+
+					<div id="unsubscribeDiv" class="text-nowrap mt-2">
+						<input name="unsubscribe" id="unsubscribe" type="checkbox" class="m-2 px-2 pb-1" th:field="*{unsubscribe}"/>
+						<label id="unsubscribeLabel" for="unsubscribe" th:text="#{EXIT_SEARCH_FORM_UNSUBSCRIBE}"/>
+					</div>
+
+					<div id="pastDiv" class="text-nowrap mt-2">
+						<input name="past" id="past" type="checkbox" class="m-2 px-2 pb-1" th:field="*{past}"/>
+						<label id="pastLabel" for="past" th:text="#{EXIT_SEARCH_FORM_PAST}"/>
+					</div>
+				</div>
+
+				<!--/* Right column. */-->
+				<div class="col">
+					<div class="row justify-content-center">
+						<input type="submit" name="search" id="search" class="col-4 btn btn-info btn-lg border-dark border-3 shadow" th:value="#{EXIT_SEARCH_FORM_BUTTON}"/>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

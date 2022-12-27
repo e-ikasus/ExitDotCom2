@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<!-- Parameters: pageCount, pageNumber, pageSize -->
+	<div th:fragment="pageSelect(entityName)">
+		<ul class="nav nav-pills">
+			<li class="nav-item" th:each="ignored, status: ${pageCount}">
+				<a th:class="${(status.index == pageNumber - 1) ? ('nav-link active') : ('nav-link')}" th:text="${status.index + 1}" th:href="'/' + ${entityName} + @{/list(pageNumber = ${status.index + 1}, pageSize = ${pageSize})}"></a>
+			</li>
+		</ul>
+	</div>
+
+</body>
+</html>

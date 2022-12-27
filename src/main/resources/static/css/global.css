@@ -1,0 +1,12 @@
+#logoDiv {
+	flex: 1;
+}
+
+#navBarDiv {
+	flex: 2;
+}
+
+#logoDiv img {
+	padding-top: 5px;
+	max-height: 120px;
+}
